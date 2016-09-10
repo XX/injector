@@ -10,21 +10,21 @@ using namespace noogen::injector;
  * Injector definitions
  */
 
-#define DECLARE_test_reactor_common_injector_DECLARE_Interface_1(var) INNER_DECLARE(TestImplementation, var)
+#define DECLARE_noogen_injector_TestInterface(var) INNER_DECLARE(TestImplementation, var)
 
-#define INJECT_test_reactor_common_injector_INJECT_Interface_1(var, ...) INNER_INJECT_STATIC(TestImplementation, var, __VA_ARGS__)
-#define INJECT_test_reactor_common_injector_INJECT_Interface_2(var, ...) INNER_INJECT_DYNAMIC_PROXY(TestImplementationProxy, TestImplementation, var, __VA_ARGS__)
+#define INJECT_noogen_injector_TestInterface(var, ...) INNER_INJECT_STATIC(TestImplementation, var, __VA_ARGS__)
+#define INJECT_noogen_injector_TestInterface_special(var, ...) INNER_INJECT_DYNAMIC_PROXY(TestImplementationProxy, TestImplementation, var, __VA_ARGS__)
 
-#define INJECT_PTR_test_reactor_common_injector_INJECT_PTR_Interface(ptrType, ptr, ...) INNER_INJECT_PTR_DYNAMIC_SHARED(ptrType, TestImplementation, ptr, __VA_ARGS__)
-#define INJECT_PTR_STATIC_test_reactor_common_injector_INJECT_PTR_Interface(ptrType, ptr, ...) INNER_INJECT_PTR_STATIC(ptrType, TestImplementation, ptr, __VA_ARGS__)
-#define INJECT_PTR_DYNAMIC_test_reactor_common_injector_INJECT_PTR_Interface(ptrType, ptr, ...) INNER_INJECT_PTR_DYNAMIC(ptrType, TestImplementation, ptr, __VA_ARGS__)
+#define INJECT_PTR_noogen_injector_TestInterface(ptrType, ptr, ...) INNER_INJECT_PTR_DYNAMIC_SHARED(ptrType, TestImplementation, ptr, __VA_ARGS__)
+#define INJECT_PTR_STATIC_noogen_injector_TestInterface(ptrType, ptr, ...) INNER_INJECT_PTR_STATIC(ptrType, TestImplementation, ptr, __VA_ARGS__)
+#define INJECT_PTR_DYNAMIC_noogen_injector_TestInterface(ptrType, ptr, ...) INNER_INJECT_PTR_DYNAMIC(ptrType, TestImplementation, ptr, __VA_ARGS__)
 
-#define CREATE_test_reactor_common_injector_CREATE_Interface_1(var, ...) INNER_CREATE_STATIC(TestImplementation, var, __VA_ARGS__)
-#define CREATE_test_reactor_common_injector_CREATE_Interface_2(var, ...) INNER_CREATE_DYNAMIC_PROXY(TestImplementationProxy, TestImplementation, var, __VA_ARGS__)
+#define CREATE_noogen_injector_TestInterface(var, ...) INNER_CREATE_STATIC(TestImplementation, var, __VA_ARGS__)
+#define CREATE_noogen_injector_TestInterface_special(var, ...) INNER_CREATE_DYNAMIC_PROXY(TestImplementationProxy, TestImplementation, var, __VA_ARGS__)
 
-#define CREATE_PTR_test_reactor_common_injector_CREATE_PTR_Interface(ptrType, ptr, ...) INNER_CREATE_PTR_DYNAMIC_SHARED(ptrType, TestImplementation, ptr, __VA_ARGS__)
-#define CREATE_PTR_STATIC_test_reactor_common_injector_CREATE_PTR_Interface(ptrType, ptr, ...) INNER_CREATE_PTR_STATIC(ptrType, TestImplementation, ptr, __VA_ARGS__)
-#define CREATE_PTR_DYNAMIC_test_reactor_common_injector_CREATE_PTR_Interface(ptrType, ptr, ...) INNER_CREATE_PTR_DYNAMIC(ptrType, TestImplementation, ptr, __VA_ARGS__)
+#define CREATE_PTR_noogen_injector_TestInterface(ptrType, ptr, ...) INNER_CREATE_PTR_DYNAMIC_SHARED(ptrType, TestImplementation, ptr, __VA_ARGS__)
+#define CREATE_PTR_STATIC_noogen_injector_TestInterface(ptrType, ptr, ...) INNER_CREATE_PTR_STATIC(ptrType, TestImplementation, ptr, __VA_ARGS__)
+#define CREATE_PTR_DYNAMIC_noogen_injector_TestInterface(ptrType, ptr, ...) INNER_CREATE_PTR_DYNAMIC(ptrType, TestImplementation, ptr, __VA_ARGS__)
 
 /**
  * Test cases
@@ -72,40 +72,40 @@ const TestInterface *xPC = &x;
 TestInterface * const xCP = &x;
 
 TEST_CASE("injector DECLARE macros is correct", "[injector.DECLARE]") {
-    DECLARE(test_reactor_common_injector_DECLARE_Interface_1, test);
+    DECLARE(noogen_injector_TestInterface, test);
     test.init(1);
     REQUIRE( test.getValue() == 1 );
 }
 
 TEST_CASE("injector INJECT macros is correct", "[injector.INJECT]") {
-    DECLARE(test_reactor_common_injector_DECLARE_Interface_1, test1);
-    INJECT(test_reactor_common_injector_INJECT_Interface_1, test1);
+    DECLARE(noogen_injector_TestInterface, test1);
+    INJECT(noogen_injector_TestInterface, test1);
     test1.init(1);
     REQUIRE( test1.getValue() == 1 );
 }
 
 TEST_CASE("injector CREATE macros is correct", "[injector.CREATE]") {
-    CREATE(test_reactor_common_injector_CREATE_Interface_1, test1);
+    CREATE(noogen_injector_TestInterface, test1);
     test1.init(1);
     REQUIRE( test1.getValue() == 1 );
 
-    CREATE(test_reactor_common_injector_CREATE_Interface_2, test2);
+    CREATE(noogen_injector_TestInterface_special, test2);
     test2.init(2);
     REQUIRE( test2.getValue() == 2 );
 
-    CREATE(test_reactor_common_injector_CREATE_Interface_1, test3, 3);
+    CREATE(noogen_injector_TestInterface, test3, 3);
     REQUIRE( test3.getValue() == 3 );
 }
 
 TEST_CASE("injector CREATE_PTR macroses is correct", "[injector.CREATE_PTR]") {
-    CREATE_PTR(test_reactor_common_injector_CREATE_PTR_Interface, TestInterface *, test1);
+    CREATE_PTR(noogen_injector_TestInterface, TestInterface *, test1);
     test1->init(1);
     REQUIRE( test1->getValue() == 1 );
 
-    CREATE_PTR_STATIC(test_reactor_common_injector_CREATE_PTR_Interface, TestInterface *, test2);
+    CREATE_PTR_STATIC(noogen_injector_TestInterface, TestInterface *, test2);
     test2->init(2);
     REQUIRE( test2->getValue() == 2 );
 
-    CREATE_PTR_DYNAMIC(test_reactor_common_injector_CREATE_PTR_Interface, TestInterface *, test3, 3);
+    CREATE_PTR_DYNAMIC(noogen_injector_TestInterface, TestInterface *, test3, 3);
     REQUIRE( test3->getValue() == 3 );
 }
